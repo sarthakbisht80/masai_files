@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  <style>
+    body{
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: bisque;
+      text-align: center;
+    }
+    header {
+      background-color: aquamarine;
+
+    } 
+  
+    #container {
+    margin-top: 30px;
+     display: grid;
+    grid-template-columns: repeat(3,1fr);
+      gap:20px; 
+          
+    }
+    #container >div{
+      border: 3px solid black;
+    }
+nav{
+  display: flex;
+  justify-content: space-between;
+}
+.Inner-container:hover {
+  border-color: aqua;
+  
+  transform: scale(1.05);
+}
+
+
+
+img{
+  height: 60vh;
+  width: 80%;
+}
+@media (max-width:673px) {
+  #container{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+  }
+}
+@media (max-width:480px) {
+  #container{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(1,1fr);
+  }
+}
+
+  </style>
+  </head>
+  <body>
+    <h1>Welcome to FireBase Movie Dashboard</h1>
+    <header>
+      <nav>
+    <select>
+      <option>Movies</option>
+    </select>
+          <button id="logout-btn">Logout</button>
+        
+      </nav>
+    </header>
+
+    <button onclick="FetchData()">Fetch</button>
+    <div id="container">
+       
+    </div>
+
+    <script >
+      let D = [];
+      async function FetchData(){
+        let data = await fetch("https://moviedatabase-17d47-default-rtdb.asia-southeast1.firebasedatabase.app/.json");
+        let res = await data.json();
+        // console.log(res);
+        
+        let moviesData = res.movies;
+        
+        D = Object.entries(moviesData).map(([id, movie]) => ({
+          id,
+          ...movie,
+        }));
+        console.log(D);
+        // let newArr=[];
+        // for( let key in  movies){
+        //     newArr.push({id:key,...movies[key]});
+        // }
+        
+        displayData(D);
+      }
+
+      async function displayData(param) {
+        let Outer = document.getElementById("container");
+        Outer.innerHTML ="";
+
+        param.forEach(ele => {
+            let innerDiv= document.createElement('div');
+            innerDiv.className="Inner-container";
+            innerDiv.innerHTML=`
+              <h2>${ele.title}</h2>
+                <p>${ele.year}</p>
+                <h4>${ele.genere}</h4>
+                <img src="${ele.image}">
+                `
+           Outer.append(innerDiv)
+
+        });
+
+      }
+    </script>
+    <script type="module" src="js/auth.js"></script>
+  </body>
+</html>
