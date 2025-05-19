@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter App</title>
+     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body{
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+  </style>
+</head>
+<body>
+
+    <div id="root">
+
+    </div>
+    <script type="text/babel">
+        function App(){
+    const { useState ,useEffect} = React;
+    const [val,setval]= useState(0);
+ 
+
+    function Incre(){
+         setval(prev=>prev+1);
+    }
+
+  
+    function Decre(){
+         if(val>0){
+            setval(prev=>prev-1);
+         }
+    }
+    return(
+       <>
+        <h1>welcome to counter APP</h1>  
+          <h2>Counter App</h2>
+          <button onClick={Incre}>Increment</button>
+            {val}
+          <button onClick={Decre}>Decrement</button>
+          
+          <br/>
+        
+        </>
+    
+    )
+
+}
+
+
+ ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+
+
+</body>
+</html>
