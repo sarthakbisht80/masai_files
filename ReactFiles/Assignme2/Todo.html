@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="root"></div>
+  <script type="text/babel">
+    function App(){
+        const {useState , useEffect} = React;
+        let [list,setlist]= useState(["Eat Breakfast","Get Shower"]);
+        let [newtask,setnewtask] =useState([]);
+
+        function handleTask(){
+         if(newtask.trim() !==""){
+            setlist([...list,newtask.trim()]);
+            setnewtask("");
+         }
+        }
+        function clearTask(){
+            setlist([]);
+
+        }
+        return(
+            <>
+            <h2>List of tasks</h2>
+            <ul>
+                {list.map((el,ind)=>(
+                    <li id>{el}</li>
+                ))}
+ </ul>
+          
+            <input type="text" placeholder="Enter your task here.."
+              value={newtask}
+                onChange={(e) => setnewtask(e.target.value)} />
+            <button onClick={handleTask}>Add task</button>
+            <br/>
+            
+       
+          <button onClick={clearTask}>Clear Tasks</button>
+            </>
+            
+        )
+        
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+    
+  </script>  
+</body>
+</html>
