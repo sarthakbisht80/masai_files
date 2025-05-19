@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="checkbox" >
+    <input  id="box" type="text" placeholder="enter name">
+    <!-- <button onchange="display(e)">CLik</button> -->
+
+        <select onchange="display(event)" id="drop">
+            <option value="male">male</option>
+            <option value="female">female</option>
+             <option value="bi">Bisexual</option>
+             <option value="trans">Trans</option>
+            
+        </select>
+    <script>
+        
+        
+        function display(event){
+            
+            let sel= event.target.value;
+            console.log(sel);
+            
+        }
+           </script>
+</body>
+</html>
