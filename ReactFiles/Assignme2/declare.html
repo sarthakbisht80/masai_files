@@ -1,7 +1,7 @@
 
     
 </body>
-</html> -->
+</html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,14 +14,43 @@
 </head>
 <body>
 
-    <div id="root"></div>   
+    <div id="root">
 
-  <script type="text/babel">
-    // Declarative Way: 
-    const App = () =>    <p>Hello, World!</p>;
+    </div>   
+<script type="text/babel">
+  function App(){
+const {useState, useEffect}= React;
+    const [timer, settimer]=useState(0);
+    const [show,setshow] = useState(false);
 
-    ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
-  </script>
+   useEffect(()=>{
+console.log("comp mounted");
+let time=setInterval(()=>{
+settimer(prev=>prev+1);
+},1000)
+
+return()=>{
+  
+  clearInterval(time);
+  console.log("unmount");
+}
+
+   },[show]);
+
+
+    return(
+      <>
+     <p> {timer}s</p>
+<button onClick={()=>setshow(!show)}>
+  {show?"Stop":"start"}
+  Show TImer</button>
+      
+      </>
+    )
+  }
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>)
+</script>
     
 </body>
 </html>

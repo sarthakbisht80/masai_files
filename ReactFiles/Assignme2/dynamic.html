@@ -1,31 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+         <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
 <body>
-    <input type="checkbox" >
-    <input  id="box" type="text" placeholder="enter name">
-    <!-- <button onchange="display(e)">CLik</button> -->
+           <div id="root">
 
-        <select onchange="display(event)" id="drop">
-            <option value="male">male</option>
-            <option value="female">female</option>
-             <option value="bi">Bisexual</option>
-             <option value="trans">Trans</option>
-            
-        </select>
-    <script>
-        
-        
-        function display(event){
-            
-            let sel= event.target.value;
-            console.log(sel);
-            
-        }
-           </script>
+           </div>  
+    <script type="text/babel">
+     
+        function App(){
+            const {useState }= React;
+           const [list,setlist]=useState(['React' ,' JavaScript' ,'CSS']);
+
+            return(
+                <>
+                <h2>List OF Subjects</h2>
+                <ul>
+                    {list.map((el,ind)=>(
+                       <li key={ind}>{el}</li> 
+                    ))}
+                    </ul>
+                </>
+            )
+
+     }
+       
+        ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+       
+
+    </script>
 </body>
 </html>
