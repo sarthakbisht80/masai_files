@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+ 
+    </style>
+   
+
+</head>
+<body>
+        <div id="root">   </div>
+ <script type="text/babel">
+        const {useState} = React;
+
+        function  Counter({initialValue}){
+            const [count,setcount]= useState(initialValue);
+            const Increment=()=>{
+                setcount(prev=>prev+1);
+            }
+            const Decre=()=>{
+                if(count>0){
+                    setcount(prev=>prev-1);
+                }
+            }
+            return(
+               <div className="container">
+                <h2>count:{count}</h2>
+
+                 <button onClick={Increment}>Incre</button>
+                  <button onClick={Decre} disabled={count === 0} className={count === 0 ? 'disabled' : ''}>Decre</button>
+                </div>
+            );
+
+        }
+
+  ReactDOM.render(<Counter initialValue={0} />, document.getElementById('root'));
+    </script>
+</body>
+</html>
