@@ -1,6 +1,7 @@
 import { useState ,useRef ,useEffect} from 'react'
 
 import './App.css'
+import InputChange from './Component/InputChange';
 
 function App() 
 {
@@ -34,7 +35,10 @@ function App()
 
   return (
     <div className="app">
-      <h1>Rick and Morty Characters</h1>
+
+      
+      <InputChange/>      
+            {/* <h1>Rick and Morty Characters</h1>
 
       {loading ? (
         <p>Loading characters...</p>
@@ -68,7 +72,7 @@ function App()
           </button>
         ))}
         
-      </div>
+      </div> */}
     </div>
   );
 }
