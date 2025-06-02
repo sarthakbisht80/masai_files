@@ -2,6 +2,9 @@ import { useState ,useRef ,useEffect} from 'react'
 
 import './App.css'
 import InputChange from './Component/InputChange';
+import Counter from './Component/Counter';
+import TodoApp1 from './Component/TodoApp1';
+import FetchData from './Component/FetchData';
 
 function App() 
 {
@@ -36,8 +39,12 @@ function App()
   return (
     <div className="app">
 
-      
-      <InputChange/>      
+{/* 
+<TodoApp1/> */}
+<FetchData/>
+
+{/*       
+      <InputChange/>       */}
             {/* <h1>Rick and Morty Characters</h1>
 
       {loading ? (
