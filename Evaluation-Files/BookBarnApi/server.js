@@ -1,7 +1,7 @@
-// const express= require("express");
+require("dotenv").config();
+const express= require("express");
 const app= require("./app");
 const connectTODB=require("./config/db");
-require("dotenv").config();
 
 const PORT= process.env.PORT||  3006;
 (async ()=>{
@@ -12,6 +12,6 @@ const PORT= process.env.PORT||  3006;
         })
 
     } catch (error) {
-        console.log(error);
+        console.error('failed to start server',error);
     }
 })();

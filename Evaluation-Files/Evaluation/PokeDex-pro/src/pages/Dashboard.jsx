@@ -21,7 +21,7 @@ if(error) return <ErrorBanner message={error}/>
 return(
     <div>
 
-    <h1>Pokemon Dashboard🪹</h1>
+    <h1>Pokemon Dashboard🪹 </h1>
 
     <div style={{display:"flex",
         flexWrap:"wrap"
@@ -36,7 +36,7 @@ return(
             <img src={p.sprites.front_default} alt={p.name} />
             <p>weight: {p.weight}</p>
             <p>types {p.types.map(t=>t.type.name).join(', ')}</p>
-            <Link to={`/details/${p.id}`}>View Details</Link>
+            {/* <Link to={`/details/${p.id}`}>View Details</Link> */}
             </div>            
         ))}
     </div>

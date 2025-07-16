@@ -1,17 +1,30 @@
 const User= require("../models/User");
 const jwt= require("jsonwebtoken");
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 //token gentration
 // const signToken=(id)=>JsonWebTokenError.sign({id},process.env.JWT_SECRET_KEY,{expiresIn:"1h"});
 
 //signup
 exports.signup=async (req, res)=>{
-    const {email,password,role}= req.body;//getting email password  
-    const user=await User.create({email,password,role});
-    // const token = signToken(user._id);
-    res.status(201).json({msg:"signup succes"});
 
-};
+    try{
+        const {email,password,role}= req.body;//getting email password  
+        const user=await User.create({email,password,role});
+    // const token = signToken(user._id);
+    bcrypt.hash(password, saltRounds, async (err, hash) => {
+            if (err) {
+                return res.status(500).json({msg:"Error while hashing password" });
+            }
+            await UserModel.create({ username, email, password: hash ,role});
+            // console.log("Raw password:", password, "Hashed-password:", hash);
+            res.json({ msg: "Signup success" });
+        });
+    } catch(error) {
+        res.status(500).json({ msg: "Something went wrong" });
+    }
+}
 
 exports.login=async (req, res)=>{
     const {email,password}= req.body;
@@ -31,5 +44,5 @@ exports.login=async (req, res)=>{
     
             return res.status(401).json({msg:"Invalid credentials"})
         
-};
-exports.forgotpassword=async()
+ };
+// exports.forgotpassword=async()

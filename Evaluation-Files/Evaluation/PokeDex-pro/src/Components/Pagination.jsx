@@ -1,10 +1,9 @@
 import {useSelector, useDispatch} from 'react-redux';
 import { fetchPokemon } from '../features/pokemon/pokemonSlice';
  
-
 const Pagination = ()=>{
-    const dispatch= useDispatch();
-    const {next,previous,offset}= useSelector(state=>state.pokemon);
+    const dispatch = useDispatch();
+    const {next,previous,offset} = useSelector(state=>state.pokemon);
     return(
 <div>
 
