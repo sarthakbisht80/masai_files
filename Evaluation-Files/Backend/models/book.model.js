@@ -8,7 +8,7 @@ const bookSchema = new mongoose.Schema({
    required:true
    },
   year: Number,
-  birthyear: Number,
+  birthyear:{type:Number,unique:true},
   nationality: String,
 });
 //book model with books as acllection  name..

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 //schema of author
 const authorSchema = new mongoose.Schema({
   name: {type: String, required: true },
-  birthyear: Number,
+  birthyear:{type:Number,unqiue:true},
   nationality: String,
 });
 
