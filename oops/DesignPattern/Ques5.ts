@@ -1,10 +1,8 @@
 //media player
-// 1. Interface
 interface MediaFile {
   play(): void;
 }
 
-// 2. Implementing Classes
 class AudioFile implements MediaFile {
   play(): void {
     console.log("Playing audio file...");
@@ -23,7 +21,6 @@ class PDFFile implements MediaFile {
   }
 }
 
-// 3. MediaPlayer Class
 class MediaPlayer {
   private media: MediaFile; //accepting medaiFile
 
@@ -36,7 +33,7 @@ class MediaPlayer {
   }
 }
 
-// 4. Usage
+
 const audioPlayer = new MediaPlayer(new AudioFile());
 audioPlayer.playMedia();
 

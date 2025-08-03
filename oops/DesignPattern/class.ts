@@ -17,6 +17,5 @@ class Car {
   }
 }
 
-// Usage
 const car = new Car();
 car.drive();

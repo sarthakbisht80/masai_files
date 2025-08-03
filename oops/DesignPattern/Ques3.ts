@@ -5,7 +5,7 @@ class PetrolEngine {
 }
 
 class Car {
-  engine: PetrolEngine = new PetrolEngine(); // Direct dependency
+  engine: PetrolEngine = new PetrolEngine();
 
   drive(): void {
     this.engine.start();

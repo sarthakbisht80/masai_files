@@ -1,9 +1,8 @@
-// 1. Interface
+
 interface Vehicle {
   start(): void;
 }
 
-// 2. Implementing Classes
 class Bike implements Vehicle {
   start(): void {
     console.log("Bike is starting");
@@ -16,7 +15,6 @@ class Car implements Vehicle {
   }
 }
 
-// 3. Driver Class (Strategy Context)
 class Driver {
   private vehicle: Vehicle;
 
@@ -34,9 +32,9 @@ class Driver {
   }
 }
 
-// 4. Usage
+
 const driver = new Driver(new Bike());
-driver.drive(); // Bike is starting \n Driving...
+driver.drive(); 
 
 driver.setVehicle(new Car());
-driver.drive(); // Car is starting \n Driving...
+driver.drive(); 
