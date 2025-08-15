@@ -13,7 +13,7 @@ let initialVal={
 
             case 'Decrement' :
                 return {count:state.count-1}                
-                case 'default':
+         case 'default':
                 return state;
          }
     }

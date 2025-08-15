@@ -3,13 +3,14 @@ const Blog = require("../models/Blog");
 const User = require("../models/User");
 const auth = require("../middleware/authMiddleware");
 
-const router = express.Router();
+const router = express.Router();//router 
+
 
 router.use(auth);
 
 // Create Blog
 router.post("/", async (req, res) => {
-  try {
+  try {3
     const blog = new Blog({ ...req.body, createdBy: req.user.userId });
     await blog.save();
     res.status(201).json({ msg: "Blog created", blog });

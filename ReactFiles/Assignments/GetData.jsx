@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from "react";
 function FetchData(){
 
-
+    //reducer funciton
     function apiReducer(state, action){
         switch(action.type){
             case 'FetchStart':
@@ -11,12 +11,13 @@ function FetchData(){
             return {...state, loading:false, data :action.payload} ;    
 
             case 'Fetch_Error':
-                return {...state,loading:false,data:action.payload};
+                return {...state,loading:false ,data:action.payload};
              default:
                     return state; 
-        }
-        }
-//initializinfg useReducer
+         }
+      }
+
+      //initializinfg useReducer -
     const [state, dispatch]  = useReducer(apiReducer, {
         loading:false,
         data:null,
@@ -30,7 +31,6 @@ function FetchData(){
             let result = await response.json();
 
             dispatch({type:'Fetch_Success', payload:result});
-
             
         } catch (error) {
            dispatch({type:'Fetch_Error', payload:"Failed to fetch"});
@@ -40,7 +40,7 @@ function FetchData(){
 
     }
     useEffect(()=>{
-        getData()
+        getData();
     },[]);
     
     return(

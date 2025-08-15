@@ -4,7 +4,7 @@ import './App.css'
 import InputChange from './Component/InputChange';
 import Counter from './Component/Counter';
 import TodoApp1 from './Component/TodoApp1';
-import FetchData from './Component/FetchData';
+
 
 function App() 
 {
@@ -39,9 +39,9 @@ function App()
   return (
     <div className="app">
 
-{/* 
-<TodoApp1/> */}
-<FetchData/>
+
+<TodoApp1/>
+{/* <FetchData/> */}
 
 {/*       
       <InputChange/>       */}

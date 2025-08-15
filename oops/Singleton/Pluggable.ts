@@ -28,7 +28,7 @@ class Tablet implements Product {
 }
 
 type ProductConstructor = new (name: string, price: number) => Product;
-
+  
 const productMap: Record<string, ProductConstructor> = {
   Laptop,
   Mobile,

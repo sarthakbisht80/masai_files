@@ -1,11 +1,11 @@
 import React, {  useEffect, useRef, useState } from "react";
 
 
-function InputChange(){
-let  inputRef= useRef();
+ function InputChange(){
+ let  inputRef= useRef();
     let btnRef=useRef();
-const [input,setinput]= useState('');
-
+ const [input,setinput]= useState('');
+   
 
  const handleClick=()=>{
     
@@ -31,7 +31,7 @@ const [input,setinput]= useState('');
         onChange={(e)=>setinput(e.target.value)}
         />
 
-        <button onClick={handleClick } >click me</button>
+        <button onClick={handleClick} >click me</button>
         <h3 ref={btnRef}></h3>
         <p>{input}</p>
 
