@@ -1,0 +1,39 @@
+* src/components/Message.css */
+.message {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  max-width: 70%;
+  color: black;
+  padding: 10px 15px;
+  border-radius: 15px;
+  word-wrap: break-word;
+  position: relative;
+}
+
+/* Other users’ messages (left) */
+.other-user {
+  background-color: #e6f7ff;
+  align-self: flex-start;
+  border-top-left-radius: 0;
+}
+
+/* Current user messages (right) */
+.current-user {
+  background-color: #007bff;
+  color: #fff;
+  
+  align-self: flex-end;
+  border-top-right-radius: 0;
+}
+
+.message .time {
+  font-size: 0.7rem;
+  color: gray;
+  margin-top: 3px;
+  align-self: flex-end;
+}
+
+.message strong {
+  margin-right: 5px;
+}

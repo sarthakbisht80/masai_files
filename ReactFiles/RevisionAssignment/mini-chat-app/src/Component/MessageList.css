@@ -1,0 +1,11 @@
+/* src/components/MessagesList.css */
+.messages-list {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  display: flex;
+  color: black;
+  flex-direction: column;
+  background-color: #f0f2f5;
+  gap: 5px;
+}

@@ -1,0 +1,6 @@
+/* src/components/ChatHeader.css */
+.chat-header {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  background-color: #fafafa;
+}
