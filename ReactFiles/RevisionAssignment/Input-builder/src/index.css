@@ -1,0 +1,73 @@
+/* Root Input Styling */
+.root-node {
+  border-left: 4px solid #4f46e5;
+  padding-left: 20px;
+  margin-top: 16px;
+  background: #eef2ff;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  color: #05040b; /* matches root-node border */
+  margin-bottom: 24px;
+  
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+}
+.add-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.4);
+}
+
+
+.add-btn {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #4f46e5, #3b82f6);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto 30px; /* center horizontally and space below */
+  box-shadow: 0 6px 14px rgba(59, 130, 246, 0.3);
+  transition: all 0.3s ease;
+}
+.root-node:hover {
+  background: #324582;
+  transform: scale(1.02);
+}
+
+
+/* Sub Input Styling */
+.sub-node {
+  border-left: 3px dashed #10b981;
+  padding-left: 16px;
+  margin-top: 12px;
+  background: #f0fdf4;
+  border-radius: 6px;
+  transition: all 0.4s ease, box-shadow 0.3s ease;
+  animation: slideFade 0.4s ease forwards;
+}
+
+.sub-node:hover {
+  background: #dcfce7;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+  transform: translateX(2px);
+}
+
+/* Animation for sub-inputs */
+@keyframes slideFade {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
