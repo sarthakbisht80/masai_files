@@ -1,9 +1,12 @@
 // takes current state return new
 //  state
 import { increment,decrement } from "./action";
+
+
 const initialState={
     count:0
 };
+
 function counterReducer(state=initialState , action)
 {
 switch(action.type){
