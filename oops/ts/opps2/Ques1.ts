@@ -1,13 +1,25 @@
-// Parent class
-class Duck {
-    swim() {
-        console.log("I know swimming");
-    }
+interface IDuck {
+  swim(): void;
+  fly(): void;
+  sound(): void;
 }
 
-// Child class inheriting Duck
-class MallardDuck extends Duck {}
+// Implement the interface in ToyDuck
+class ToyDuck implements IDuck {
+  swim(): void {
+    console.log("Can float on water");
+  }
+
+  fly(): void {
+    console.log("Cannot fly");
+  }
+
+  sound(): void {
+    console.log("Cannot sound");
+  }
+}
 
 // Test
-const duck = new MallardDuck();
-duck.swim(); // Output: I know swimming
+const duck: IDuck = new ToyDuck();
+duck.fly();   
+duck.sound(); 
