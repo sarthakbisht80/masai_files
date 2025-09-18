@@ -1,0 +1,26 @@
+Explanation
+
+Global Scope
+
+The object obj is created with properties name = "Counter" and count = 0.
+
+Inside start()
+
+The method start logs the object name and then runs a loop with setTimeout.
+
+Inside setTimeout (Original Code)
+
+The callback was written as a regular function. Regular functions have their own this, and inside setTimeout, this points to the global context instead of the object. Because of this, this.count was undefined and the counter did not increment.
+
+Output: NaN or undefined values instead of increasing numbers.
+
+Inside setTimeout (After Fix)
+
+The callback is changed to an arrow function. Arrow functions do not have their own this; they inherit it from the surrounding scope. Here, the surrounding scope is the start method, where this refers to the object. So this.count correctly updates the counter.
+
+Output:
+
+Counter started  
+1  
+2  
+3  

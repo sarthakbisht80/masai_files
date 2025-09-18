@@ -1,0 +1,25 @@
+Explanation
+
+Global Scope
+
+The user object is created with a property name = "Alice".
+
+Inside printName
+
+This method was originally written as an arrow function. Arrow functions do not have their own this; they inherit it from the surrounding scope (global context here). The global scope has no name property, so the output is undefined.
+
+Output: undefined
+
+Inside printName2
+
+This method is a regular function. For regular functions, this refers to the object that calls the method. Since user.printName2() is called on the user object, this points to user and accesses name = "Alice".
+
+Output: Alice
+
+After Fix
+
+If we change printName to a regular function, both methods behave the same way. Now this refers to the user object in both cases.
+
+Output:
+Alice
+Alice
