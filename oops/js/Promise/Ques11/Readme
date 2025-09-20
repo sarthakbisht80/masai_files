@@ -1,0 +1,36 @@
+# Assignment - Promises
+
+## Question
+Create a JavaScript function `fetchUserData` that simulates fetching user data from a server using Promises.
+
+### Requirements
+- Return a Promise.
+- Resolve with a user object `{ id: 1, name: "John Doe", role: "Admin" }` after 2 seconds.
+- Reject with error `"Failed to fetch user data"` if a random condition fails (`Math.random() < 0.3`).
+- Call `fetchUserData` and:
+  - Handle success with `.then()`
+  - Handle error with `.catch()`
+  - Always log `"Fetch attempt complete"` with `.finally()`.
+- Add another Promise (`fetchUserPermissions`) and handle both together using `Promise.all` or `Promise.race`.
+
+---
+
+## Implementation
+- Created two functions:  
+  - `fetchUserData()` → simulates fetching user info.  
+  - `fetchUserPermissions()` → simulates fetching user permissions.  
+- Used `setTimeout()` to mimic async delays.  
+- Used `.then()`, `.catch()`, and `.finally()` to handle results.  
+- Combined both Promises using **Promise.all** and **Promise.race**.
+
+---
+
+## Tricky Parts
+- Handling both success and failure scenarios randomly.  
+- Ensuring `.finally()` runs regardless of success or failure.  
+- Understanding differences between `Promise.all` (waits for all, fails if any fail) and `Promise.race` (returns the first settled Promise).
+
+---
+
+## Expected Outputs
+Success case:

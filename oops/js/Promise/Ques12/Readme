@@ -1,0 +1,43 @@
+# Assignment - Async/Await
+
+## Question
+Create a JavaScript function `getUserAndPosts` using async/await to simulate fetching user details and their posts.
+
+### Requirements
+- `fetchUser()` → returns `{ id: 1, name: "Jane Doe" }` after 1.5s.
+- `fetchPosts(userId)` → returns posts after 2s.
+- `getUserAndPosts()`:
+  - Uses `await` to first get the user, then fetch posts.
+  - Returns combined data:
+    ```js
+    {
+      user: { id: 1, name: "Jane Doe" },
+      posts: [ { postId: 101, title: "Post One" }, { postId: 102, title: "Post Two" } ]
+    }
+    ```
+- Handle errors with `try...catch`.
+- Log `"All data fetched successfully"` after completion.
+
+---
+
+## Implementation
+- Used `setTimeout` inside Promises to simulate async operations.
+- `fetchUser()` → randomly succeeds or fails (20% failure chance).
+- `fetchPosts(userId)` → fetches posts for a given userId.
+- `getUserAndPosts()`:
+  - Calls both functions sequentially with `await`.
+  - Combines data into one object.
+  - Handles errors with `try...catch`.
+  - Uses `finally` to log a completion message.
+
+---
+
+## How Async/Await Helped
+- Async/await makes code look synchronous, improving readability.
+- Easier to follow the flow compared to multiple `.then()` chains.
+- Error handling is cleaner using `try...catch`.
+
+---
+
+## Expected Outputs
+### ✅ Success Case
