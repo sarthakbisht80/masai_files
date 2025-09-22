@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Meal Browser</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🍽 Meal Browser</h1>
+
+    <!-- Controls -->
+    <div class="controls">
+      <input type="text" id="searchInput" placeholder="Search by name or category...">
+      
+      <select id="sortSelect">
+        <option value="">Sort By</option>
+        <option value="name-asc">Name (A → Z)</option>
+        <option value="name-desc">Name (Z → A)</option>
+        <option value="area-asc">Area (A → Z)</option>
+        <option value="area-desc">Area (Z → A)</option>
+      </select>
+
+      <button id="resetBtn">Reset</button>
+    </div>
+
+    <!-- Meals List -->
+    <div id="mealList" class="meal-list"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
