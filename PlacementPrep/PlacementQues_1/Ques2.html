@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ScopeQuest - Closures </title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #222;
+      color: white;
+      padding: 20px;
+    }
+
+    button {
+      margin: 5px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    .box {
+      margin-top: 20px;
+      padding: 10px;
+   
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>Part 2: Closure Loop</h2>
+  <h3> Buggy Buttons(var problem)</h3>
+    <div id="buggy" class="box"></div>
+
+  <h3>Fixed Buttons (using Closure)</h3>
+  <div id="fixed" class="box"></div>
+
+  <script>
+
+    // BUGGY VERSION
+   
+    var buggyBox = document.getElementById("buggy");
+
+    for(var i = 1; i <= 5; i++) {
+
+      var btn = document.createElement("button");
+      btn.innerText = "Button " + i;
+    
+        btn.addEventListener("click",()=>{
+            alert("button num "+i);
+        });
+      buggyBox.appendChild(btn);
+    }
+
+    // ------------------
+   // (Closure)
+    // ------------------
+    var fixedBox = document.getElementById("fixed");
+
+    for (var j = 1; j <= 5; j++) {
+      var btn2 = document.createElement("button");
+      btn2.innerText = "Button " + j;
+
+      // closure using IIFE
+      (function (num) {
+       
+        btn2.addEventListener("click",()=>{
+            alert("button num "+num);
+        });
+      })(j);
+
+      fixedBox.appendChild(btn2);
+    }
+  </script>
+
+</body>
+</html>

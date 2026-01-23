@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ScopeQuest - Hoisting</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #222;
+      color: white;
+      padding: 20px;
+    }
+
+    button {
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+    #output {
+      margin-top: 20px;
+      
+      padding: 10px;
+      min-height: 120px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>Hoisting Test</h2>
+  <button onclick="runHoistingTest()">Test Hoisting</button>
+
+  <div id="output"></div>
+
+  <script>
+    //part One:-
+    function runHoistingTest() {
+      let box = document.getElementById("output");
+       box.innerHTML = "";
+        try {
+            box.innerHTML += "var before declare: " + myVar + "<br>";
+        } catch (error) {
+             box.innerHTML += "let error: " + e.message + "<br>";
+        }
+      try {
+        box.innerHTML += "let before declare: " + myLet + "<br>";
+      } catch (e) {
+        box.innerHTML += "let error: " + e.message + "<br>";
+      }
+      try {
+        box.innerHTML += "const before declare: " + myConst + "<br>";
+      } catch (e) {
+        box.innerHTML += "const error: " + e.message + "<br>";
+      }
+
+      var myVar = "I am var";
+      let myLet = "I am let";
+      const myConst = "I am const";
+
+      // part 2-
+      
+    }
+  </script>
+
+</body>
+</html>
