@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Closure Counter Demo</title>
+</head>
+<body>
+
+  <h2>Private Counter (Closure)</h2>
+
+  <p>Value: <span id="count">0</span></p>
+
+  <button id="inc">+</button>
+  <button id="dec">-</button>
+
+  <hr>
+
+  <h3>Block Scope Visualizer</h3>
+  <button id="checkScope">Test Block Scope</button>
+  <pre id="scopeResult"></pre>
+
+  <hr>
+
+  <h3>Execution Timer (Closure)</h3>
+  <button id="timerBtn">How long since page loaded?</button>
+
+  <script>
+    // ---------------- COUNTER USING CLOSURE ----------------
+    function createCounter() {
+      let count = 0; // private
+
+      return {
+        increment() {
+          count++;
+          return count;
+        },
+        decrement() {
+          count--;
+          return count;
+        },
+        getValue() {
+          return count;
+        }
+      };
+    }
+
+    const counter = createCounter();
+
+    const countEl = document.getElementById("count");
+
+    document.getElementById("inc").onclick = function () {
+      countEl.innerText = counter.increment();
+    };
+
+    document.getElementById("dec").onclick = function () {
+      countEl.innerText = counter.decrement();
+    };
+
+
+    // ---------------- BLOCK SCOPE VISUALIZER ----------------
+    document.getElementById("checkScope").onclick = function () {
+      let output = "";
+
+      try {
+        {
+          let secret = "I am inside block";
+          output += "Inside block: " + secret + "\n";
+        }
+
+        // trying to access outside block
+        output += secret;
+      } catch (err) {
+        output += "Outside block error: " + err.message;
+      }
+
+      document.getElementById("scopeResult").innerText = output;
+    };
+
+
+    //  CLOSURE 
+    function createTimer() {
+      const startTime = Date.now();
+
+      return function () {
+        const now = Date.now();
+        const seconds = Math.floor((now - startTime) / 1000);
+        alert("Seconds since page load: " + seconds);
+      };
+    }
+
+    const timer = createTimer();
+
+    document.getElementById("timerBtn").onclick = timer;
+  </script>
+
+</body>
+</html>
