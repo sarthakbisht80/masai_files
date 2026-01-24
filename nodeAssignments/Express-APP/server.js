@@ -1,28 +1,49 @@
 const express= require("express");
 const PORT=3007;
+const fs= require("fs");
 const app = express();
+const path= require("path")
+app.use(express.json());//middleware
 
-app.use(express.json());
+const os= require("os");
 
-const users=[
-  { id: 1, name: "John Doe", email: "john@example.com" },
-  { id: 2, name: "Jane Doe", email: "jane@example.com" },
-  { id: 3, name: "Bob Smith", email: "bob@example.com" }
-];
-app.get("/users/list",(req,res)=>{
 
-    res.json(users);
-
-})
-app.get("/users/get",(req,res)=>{
-    res.json(users[0]);
+app.get("/home",(req,res)=>{
     
-})
-app.use((req,res)=>{
-    res.status(404).send(" 404 Not Found ");
+  // console.log("os type-",os.type());
+
+//  res.json({msg:"Home page"})
+res.send("<h2>this is Home page</>h2")
 
 })
+
+app.get("/data",(req,res)=>{
+ let data=fs.readFileSync("output.txt","utf-8");
+console.log(data)
+res.json({msg:"data is ",data});
+})
+
+
+// fs.writeFileSync("output.txt", "Hello, this is written by Node.js!");
+// console.log("File written successfully!");
+
+//route for users data
+
+
+
+// fs.readFile("output.txt","utf-8",(err,data)=>{
+//   if(err){
+//     console.log(err);
+//     return ;
+//   }
+//   else{
+//    console.log(data);
+//   }
+// })
+
+
+
+
 app.listen(PORT,()=>{
-  console.log("Server Started at 3007");
-});
-
+  console.log(`App runs on port ${PORT}`);
+})

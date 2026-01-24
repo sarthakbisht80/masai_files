@@ -5,7 +5,7 @@ const authMiddleware = require("../middleware/authMiddleware");
 const router = express.Router();
 
 // Middleware for all note routes
-router.use(authMiddleware);
+
 
 // Create Note
 router.post("/", async (req, res) => {
@@ -30,9 +30,12 @@ router.get("/", async (req, res) => {
 
 // Update Note
 router.put("/:id", async (req, res) => {
+  
+const {id}= req.params;
+const userId= req.user.userId;
   try {
     const note = await Note.findOneAndUpdate(
-      { _id: req.params.id, createdBy: req.user.userId },
+      { _id: id, createdBy: userId },
       req.body,
       { new: true }
     );
@@ -44,6 +47,37 @@ router.put("/:id", async (req, res) => {
     res.status(500).json({ msg: "Error updating note", error: err.message });
   }
 });
+
+router.delete("/:id",async (req, res)=>{
+  const {id}= req.params;
+  try {
+    const note = await Note.findByIdAndDelete({_id: id});
+    if(!note){
+      req.json({msg:"No such user found!"});
+    }
+    res.status(200).json({msg:"Note deleted succesfully"});
+
+  } catch (error) {
+      res.status(500).json({ msg: "Error updating note", error: err.message });
+  }
+
+}
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Delete Note
 router.delete("/:id", async (req, res) => {

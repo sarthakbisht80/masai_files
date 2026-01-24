@@ -5,7 +5,7 @@ const Router=require("./routes/authRoutes");
 
 
 
-app.use(express.json());
+app.use(express.json());//package for
 
 app.use("/",Router);
 

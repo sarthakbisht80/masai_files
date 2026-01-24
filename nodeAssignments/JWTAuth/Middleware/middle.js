@@ -1,19 +1,20 @@
  const jwt = require("jsonwebtoken");
 
-const Middleware= async(req,res,next)=>{
-const token = req.headers.authorization?.split(" ")[1];
-// console.log("token is",token);
-// res.json({msg:"Token generated is",token});
-try {
+const Middleware=async(req,next,res)=>{
+  const token= req.headers.Authoriation.split(" ")[1]; //extract token from hadears
+  if(!token){
+    req.status(400).json({msg:"no token found User is not registered."});
+  }
+  try {
     
-    const decode= jwt.verify(token,process.env.JWT_SECRET);
-    console.log(decode);
-    req.user= decode.email;
-    next();
-} catch (error) {
+    const decoded= jwt.verify(token, process.env.JWT_SECRET);
+    console.log(decoded);
+    req.users=decoded; //accessible for all the Routes
+
+  } catch (error) {
+    res.status(404).json({msg:"Error ",error});
     
-  return res.status(403).json({ msg: "Invalid Token" });
-}
+  }
 }
 
 module.exports=Middleware;

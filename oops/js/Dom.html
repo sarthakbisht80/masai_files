@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="heading"> Helloow DOM</h1>
+
+    <p class="para1"> this is a paragragh</p>
+    <p class="para2"> another paragrah</p>
+
+    <button id="btn"> CLick Me🙃</button>
+
+        <script>
+                    const heading= document.getElementById('heading');
+            const btn= document.getElementById('btn');
+             
+            
+        btn.addEventListener('click',()=>{
+            heading.innerHTML= heading.innerHTML==="Hellow Dom"?"hellow Sarthjak":" Hellow Dom";
+        });
+            
+
+      </script>
+</body>
+</html>

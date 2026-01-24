@@ -5,9 +5,10 @@ const authRoutes = require("./Routes/authRoutes");
 const noteRoutes = require("./Routes/noteRoutes");
 
 dotenv.config();
-const app = express();
+const app = express(); //creating ex[res app]
 
 app.use(express.json());
+// app.use("/router-path",authRoutes);
 
 app.use("/auth", authRoutes);
 app.use("/notes", noteRoutes);
