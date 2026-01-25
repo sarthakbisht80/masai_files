@@ -1,0 +1,16 @@
+body{
+  font-family: sans-serif;
+  background: #fff;
+}
+
+.card{
+  background-color: wheat;
+  padding: 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin: 20px;
+}
+button{
+  padding: 6px 12px;
+  margin: 4px;
+}

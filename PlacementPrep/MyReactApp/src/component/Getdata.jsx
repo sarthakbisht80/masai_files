@@ -80,8 +80,11 @@ const Getdata = () => {
                            <p>{post.body}</p>
                     <div className='fotter '>
                     <span> @{users[post.userId]}</span>
-                    <button onClick={()=>toggleCommnets(post.id)}>  toggle</button>
+                    <button onClick={()=>toggleCommnets(post.id)}>  
+                         { openPostId ===post.id ?"hide comments":"show comments"}
+                        </button>
                         </div>
+
                         </div>
                 ))}
              </div>
