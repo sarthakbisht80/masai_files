@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ShopQuest</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * { box-sizing: border-box; font-family: Arial; }
+    body { margin: 0; background:#f4f6f8; }
+    header { background:#111; color:#fff; padding:12px; display:flex; justify-content:space-between; }
+    main { padding:20px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:16px; }
+    .card { background:#fff; padding:10px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,.1); }
+    button { padding:6px 10px; cursor:pointer; }
+    #cart { position:fixed; right:0; top:60px; width:260px; background:#fff; height:90vh; overflow:auto; box-shadow:-2px 0 6px rgba(0,0,0,.2); padding:10px; }
+    #devPanel { margin-top:30px; background:#fff; padding:10px; border-radius:6px; }
+  </style>
+</head>
+<body>
+<header>
+  <div>🛒 ShopQuest</div>
+  <div id="authBox"></div>
+</header>
+
+<main> 
+    //search
+  <input id="search" placeholder="Search..." />
+     <select id="category"></select>
+  <select id="sort">
+    <option value="">Sort</option>
+         <option value="asc">Price Asc</option>
+             <option value="desc">Price Desc</option>
+  </select> 
+
+  <div id="status"></div>
+  <div class="grid" id="products"></div>
+
+  <div id="devPanel">
+    <h3>Developer Panel</h3>
+    <ul id="logs"></ul>
+  </div>
+</main>
+
+<div id="cart"><h3>Cart</h3><div id="cartItems"></div><button id="checkout">Checkout</button></div>
+
+<script>
+const API = 'https://fakestoreapi.com';
+    let products = [];
+    let cart = JSON.parse(localStorage.getItem('cart')||'[]');
+let token = localStorage.getItem('token');
+let logs = JSON.parse(localStorage.getItem('logs')||'[]');
+
+function log(url, method, status, dur, source){
+  logs.unshift({url,method,status,dur,source});
+  logs = logs.slice(0,5);
+  localStorage.setItem('logs',JSON.stringify(logs));
+  renderLogs();
+}
+function fetchWithRetry(url, retries=2){
+    let start=Date.now();
+    return new Promise((resolve,reject)=>{
+        fetch(url).then(r=>{
+            log(url,'GET',r.status,Date.now()-start,'network');
+            if(!r.ok) throw r;
+            return r.json();
+        }).then(resolve).catch(e=>{
+            if(retries>0) return fetchWithRetry(url,retries-1).then(resolve).catch(reject);
+            reject(e);
+        })
+    })
+}
+//funtion for fetching the data
+ 
+function loadProducts(){
+  document.getElementById('status').innerText='Loading...';
+  Promise.race([
+    fetchWithRetry(API+'/products'),
+    new Promise((_,rej)=>setTimeout(()=>rej('timeout'),4000))
+  ]).then(d=>{
+    products=d;
+    localStorage.setItem('cache',JSON.stringify(d));
+    renderProducts(d);
+    document.getElementById('status').innerText='';
+  }).catch(()=>{
+    let cache=JSON.parse(localStorage.getItem('cache')||'[]');
+    renderProducts(cache);
+    document.getElementById('status').innerText='Offline – Cached Data';
+  })
+}
+
+function renderProducts(list){
+  let box=document.getElementById('products');
+  box.innerHTML='';
+  list.forEach(p=>{
+    let d=document.createElement('div');
+    d.className='card';
+    d.innerHTML=`<img src="${p.image}" height="120"><h4>${p.title}</h4><p>$${p.price}</p><button>Add</button>`;
+    d.querySelector('button').onclick=()=>addToCart(p);
+    box.appendChild(d);
+  })
+}
+
+function addToCart(p){ cart.push(p); saveCart(); }
+function saveCart(){ localStorage.setItem('cart',JSON.stringify(cart)); renderCart(); }
+function renderCart(){
+  let c=document.getElementById('cartItems');
+  c.innerHTML='';
+  cart.forEach((i,idx)=>{
+    let d=document.createElement('div');
+    d.innerHTML=`${i.title} <button>x</button>`;
+    d.querySelector('button').onclick=()=>{cart.splice(idx,1);saveCart()};
+    c.appendChild(d);
+  })
+}
+
+function login(){
+  fetch(API+'/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:'mor_2314',password:'83r5^_'})})
+    .then(r=>r.json()).then(d=>{token=d.token;localStorage.setItem('token',token);renderAuth();})
+}
+
+function renderAuth(){
+  let a=document.getElementById('authBox');
+  if(token) a.innerHTML=`Logged In <button onclick="logout()">Logout</button>`;
+  else a.innerHTML=`<button onclick="login()">Login</button>`;
+}
+function logout(){token=null;localStorage.removeItem('token');renderAuth()}
+
+function renderLogs(){
+  let l=document.getElementById('logs');l.innerHTML='';
+  logs.forEach(x=>{let li=document.createElement('li');li.innerText=`${x.method} ${x.url} ${x.status} ${x.dur}ms (${x.source})`;l.appendChild(li);})
+}
+
+renderCart();renderAuth();renderLogs();loadProducts();
+</script>
+</body>
+</html>
