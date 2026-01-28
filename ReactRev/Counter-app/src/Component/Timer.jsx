@@ -9,7 +9,7 @@ const Timer = () => {
   
   useEffect(()=>{
     let count;
-    if(isStart===true){
+    if(isStart === true){
       count= setInterval(()=>{
         setSeconds(prev=>prev+1);
       },1000);
