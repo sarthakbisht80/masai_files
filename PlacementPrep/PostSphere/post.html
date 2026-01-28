@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>JSONPlaceholder Feed App</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background:#f5f7fb; }
+    header { padding: 12px; background:#222; color:white; display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+    input, select, button { padding:6px; }
+    #feed { height: calc(100vh - 140px); overflow:auto; padding:16px; }
+    .post { background:white; padding:12px; border-radius:8px; margin-bottom:12px; cursor:pointer; }
+    .highlight { border:2px solid orange; }
+    .user-sep { font-weight:bold; margin:16px 0 6px; }
+    footer { padding:10px; display:flex; gap:8px; justify-content:center; }
+    #modal { position:fixed; inset:0; background:rgba(0,0,0,.5); display:none; }
+    #modalContent { background:white; width:60%; margin:5% auto; padding:16px; border-radius:8px; }
+  </style>
+</head>
+<body>
+<header>
+  <input id="search" placeholder="Search..." />
+  <select id="modeSel">
+    <option value="full">Full Text</option>
+    <option value="title">Title Only</option>
+    <option value="fuzzy">Fuzzy</option>
+  </select>
+  <label><input type="checkbox" id="longToggle"/> Highlight long</label>
+  <label><input type="checkbox" id="groupToggle"/> Group by user</label>
+  <label><input type="checkbox" id="sortToggle"/> Sort by comments</label>
+</header>
+
+<div id="feed"></div>
+
+<footer>
+  <button id="prev">Prev</button>
+  <span id="page"></span>
+  <button id="next">Next</button>
+</footer>
+
+<div id="modal">
+  <div id="modalContent"></div>
+</div>
+
+<script>
+const API = 'https://jsonplaceholder.typicode.com';
+const feed = document.getElementById('feed');
+const search = document.getElementById('search');
+const modeSel = document.getElementById('modeSel');
+const longToggle = document.getElementById('longToggle');
+const groupToggle = document.getElementById('groupToggle');
+const sortToggle = document.getElementById('sortToggle');
+const prev = document.getElementById('prev');
+const next = document.getElementById('next');
+const pageEl = document.getElementById('page');
+const modal = document.getElementById('modal');
+const modalContent = document.getElementById('modalContent');
+
+let page = 1;
+let limit = 10;
+let posts = [];
+let users = {};
+let commentCounts = {};
+
+async function init(){
+  try{
+        feed.innerHTML = 'Loading users...';
+        const userRes = await fetch(API + '/users');
+        const userData = await userRes.json();
+    userData.forEach(u => users[u.id] = u);
+    await loadPosts();
+  }catch(err){
+    feed.innerHTML = 'Failed to initialize app';
+    console.error(err);
+  }
+}
+
+async function loadPosts(){
+  try{
+    feed.innerHTML = 'Loading posts...';
+    const res = await fetch(`${API}/posts?_page=${page}&_limit=${limit}`);
+    posts = await res.json();
+    pageEl.textContent = `Page ${page}`;
+    render();
+  }catch(e){
+    feed.innerHTML = 'Error loading posts';
+  }
+}
+
+function fuzzyMatch(text, q){
+    let ti = 0;
+    for (let qi = 0; qi < q.length; qi++){
+        ti = text.indexOf(q[qi], ti);
+    if (ti === -1) return false;
+    ti++;
+  }
+  return true;
+}
+
+function applyTransformers(data){
+  let out = [...data];
+
+  if(sortToggle.checked){
+    out = out.sort((a,b)=>(commentCounts[b.id]||0)-(commentCounts[a.id]||0));
+  }
+
+  return out;
+}
+
+function render(){
+  let q = search.value.toLowerCase();
+  let mode = modeSel.value;
+
+  let filtered = posts.filter(p => {
+    let user = users[p.userId]?.name || '';
+    let blob = `${p.title} ${p.body} ${user}`.toLowerCase();
+    if(!q) return true;
+    if(mode === 'title') return p.title.toLowerCase().includes(q);
+    if(mode === 'fuzzy') return fuzzyMatch(blob, q);
+    return blob.includes(q);
+  });
+
+    filtered = applyTransformers(filtered);
+
+    feed.innerHTML = '';
+    let lastUser = null;
+
+  filtered.forEach(p => {
+    if(groupToggle.checked && p.userId !== lastUser){
+      const sep = document.createElement('div');
+      sep.className = 'user-sep';
+      sep.textContent = users[p.userId].name;
+      feed.appendChild(sep);
+      lastUser = p.userId;
+    }
+
+            const div = document.createElement('div');
+            div.className = 'post';
+            if(longToggle.checked && p.body.length > 120) div.classList.add('highlight');
+        div.innerHTML = `<h4>${p.title}</h4><p>${p.body.slice(0,80)}...</p>`;
+        div.onclick = () => openDetail(p.id);
+        feed.appendChild(div);
+  });
+
+  if(!filtered.length){
+    feed.innerHTML = 'No results found';
+  }
+}
+
+        async function openDetail(id){
+        modal.style.display = 'block';
+        modalContent.innerHTML = 'Loading...';
+
+  const [post, comments] = await Promise.all([
+    fetch(API + '/posts/' + id).then(r=>r.json()),
+    fetch(API + `/comments?postId=${id}`).then(r=>r.json())
+  ]);
+
+  const user = users[post.userId];
+
+  modalContent.innerHTML = `
+    <button onclick="modal.style.display='none'">Close</button>
+    <h2>${post.title}</h2>
+    <p><b>${user.name}</b></p>
+    <p>${post.body}</p>
+    <h3>Comments (${comments.length})</h3>
+    ${comments.map(c=>`<p><b>${c.email}</b>: ${c.body}</p>`).join('')}
+  `;
+}
+
+async function loadCommentCounts(){
+  const c = await fetch(API + '/comments').then(r=>r.json());
+  commentCounts = c.reduce((a,x)=>{
+    a[x.postId] = (a[x.postId] || 0) + 1;
+    return a;
+  },{});
+}
+
+let timer;
+search.oninput = () => {
+  clearTimeout(timer);
+  timer = setTimeout(render, 300);
+};
+
+[modeSel,longToggle,groupToggle].forEach(el => el.onchange = render);
+
+sortToggle.onchange = async () => {
+  if(sortToggle.checked) await loadCommentCounts();
+  render();
+};
+
+prev.onclick = () => { if(page > 1){ page--; loadPosts(); } };
+next.onclick = () => { page++; loadPosts(); };
+
+modal.onclick = e => { if(e.target === modal) modal.style.display='none'; };
+
+init();
+</script>
+</body>
+</html>
