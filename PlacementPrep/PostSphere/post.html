@@ -100,7 +100,7 @@ function applyTransformers(data){
   let out = [...data];
 
   if(sortToggle.checked){
-    out = out.sort((a,b)=>(commentCounts[b.id]||0)-(commentCounts[a.id]||0));
+    out = out.sort((a,b)=> (commentCounts[b.id]||0)-(commentCounts[a.id]||0));
   }
 
   return out;
@@ -181,7 +181,7 @@ search.oninput = () => {
   timer = setTimeout(render, 300);
 };
 
-[modeSel,longToggle,groupToggle].forEach(el => el.onchange = render);
+[modeSel,longToggle,groupToggle].forEach(ele => ele.onchange = render);
 
 sortToggle.onchange = async () => {
   if(sortToggle.checked) await loadCommentCounts();
