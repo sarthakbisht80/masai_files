@@ -18,7 +18,7 @@ function App() {
           <Dashboard/>
         </ProtectedRoute>
     }/>
- 
+ <Route path='*' element={<Navigate to="/login"/>} />
     </Routes >
     </BrowserRouter>
   )
