@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Posts Table</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Users Table</h2>
+
+<div class="controls">
+  <input type="text" id="searchInput" placeholder="Search name or email" />
+
+  <select id="roleFilter">
+    <option value="">All Roles</option>
+     <option value="Admin">Admin</option>
+     <option value="User">User</option>
+    <option value="Manager">Manager</option>
+  </select>
+
+  <select id="statusFilter">
+     <option value="">All Status</option>
+    <option value="Active">Active</option>
+    <option value="Inactive">Inactive</option>
+  </select>
+</div>
+
+<table id="dataTable">
+  <thead>
+    <tr>
+      <th data-key="id">ID</th>
+      <th data-key="name">Name</th>
+      <th data-key="email">Email</th>
+      <th data-key="role">Role</th>
+      <th data-key="status">Status</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<div id="pagination"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
