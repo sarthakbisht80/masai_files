@@ -1,16 +1,16 @@
 //Json  user POst Api
-const API ="https://jsonplaceholder.typicode.com/posts";
+const API ="https://dummyjson.com/users";
 
 let allData =[];//emptY data should be initially 
 let filteredData = [];
 
-let currentPage =1;
+let currentPage = 1;
 const rowsPerPage=10;
 
 let sortColumn =null;
 let sortDirection= "asc";
 
-const tbody =document.querySelector("tbody");
+const tbody=document.querySelector("tbody");
 const paginationDiv =document.getElementById("pagination");
 
 const searchInput =document.getElementById("searchInput");
@@ -18,17 +18,20 @@ const roleFilter=document.getElementById("roleFilter");
 const statusFilter= document.getElementById("statusFilter");
 
 
-// fetch data
+// fetch data first thibf
 async function loadData() {
   const res= await fetch(API);
-  const posts= await res.json();
 
+  const data= await res.json();
 
-  allData =posts.map(p => ({
+  const AllUsers=data.users;
+  console.log(AllUsers);
+  
+  allData =AllUsers.map(p => ({
     id: p.id,
-    name: "User"+ p.id,
-    email: "user"+ p.id+"@gmail.com",
-    role: ["Admin","User","Manager"][p.id % 3],
+    name:  p.firstName +" "+p.lastName,
+    email:  p.firstName+"@gmail.com",
+    role: p.role,
     status: p.id % 2 ? "Active" : "Inactive"
   }));
 
@@ -37,7 +40,6 @@ async function loadData() {
 }
 
 loadData();
-
 
 // render everything
 function render(){
@@ -48,7 +50,7 @@ function render(){
 
 // table rows
 function renderTable(){
-
+//empty the previous innerHTml if any.
   tbody.innerHTML ="";
 
   const start =(currentPage - 1) * rowsPerPage;
